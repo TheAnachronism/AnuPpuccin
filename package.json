@@ -1,0 +1,17 @@
+{
+  "name": "anuppuccin",
+  "version": "1.6.0",
+  "private": true,
+  "license": "GPL-3.0-only",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "packageManager": "bun@1.4.2",
+  "scripts": {
+    "build": "sass src/base.scss theme.css --no-source-map --no-charset",
+    "build:snippets": "sass --no-source-map --no-charset snippets/src/custom-background.scss:snippets/custom-background.css snippets/src/custom-rainbow-colors.scss:snippets/custom-rainbow-colors.css snippets/src/extended-colorschemes.scss:snippets/extended-colorschemes.css snippets/src/floating-search-bar.scss:snippets/floating-search-bar.css snippets/src/floating-status-bar.scss:snippets/floating-status-bar.css snippets/src/its-frontmatter.scss:snippets/its-frontmatter.css snippets/src/minimal-cards.scss:snippets/minimal-cards.css snippets/src/notion-cards.scss:snippets/notion-cards.css"
+  },
+  "devDependencies": {
+    "sass": "1.105.1"
+  }
+}

@@ -1,15 +1,22 @@
+BUN ?= bun
+SASS ?= $(BUN) x --bun sass
+SASSFLAGS := --no-source-map --no-charset
+
 .PHONY: build
 build: ## Build CSS
-	sass src/base.scss theme.css --no-source-map --no-charset
-	sass src/base.scss obsidian.css --no-source-map --no-charset
+	$(SASS) src/base.scss theme.css $(SASSFLAGS)
 
 .PHONY: snippets
 snippets: ## Build CSS for snippets
-	sass snippets/src/notion-cards.scss snippets/notion-cards.css --no-source-map
-	sass snippets/src/its-frontmatter.scss snippets/its-frontmatter.css --no-source-map
-	sass snippets/src/custom-rainbow-colors.scss snippets/custom-rainbow-colors.css --no-source-map
-	sass snippets/src/extended-colorschemes.scss snippets/extended-colorschemes.css --no-source-map
-	sass snippets/src/floating-search-bar.scss snippets/floating-search-bar.css --no-source-map
+	$(SASS) $(SASSFLAGS) \
+		snippets/src/custom-background.scss:snippets/custom-background.css \
+		snippets/src/custom-rainbow-colors.scss:snippets/custom-rainbow-colors.css \
+		snippets/src/extended-colorschemes.scss:snippets/extended-colorschemes.css \
+		snippets/src/floating-search-bar.scss:snippets/floating-search-bar.css \
+		snippets/src/floating-status-bar.scss:snippets/floating-status-bar.css \
+		snippets/src/its-frontmatter.scss:snippets/its-frontmatter.css \
+		snippets/src/minimal-cards.scss:snippets/minimal-cards.css \
+		snippets/src/notion-cards.scss:snippets/notion-cards.css
 
 .PHONY: help
 help: ## Display help
