@@ -1,9 +1,9 @@
 /*-Button for metadata-*/
 body.anuppuccin-accent-toggle {
 
-    &.anp-button-metadata-toggle,
-    .markdown-rendered.metadata-button {
-        .frontmatter-container .frontmatter-container-header {
+    &.anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view),
+    .metadata-button {
+        .metadata-container .metadata-properties-heading {
             background-color: rgba(var(--ctp-accent), 0.8);
 
             &:hover {
@@ -19,42 +19,61 @@ body.anuppuccin-accent-toggle {
 
 body:not(.anuppuccin-accent-toggle) {
 
-    &.anp-button-metadata-toggle,
-    .markdown-rendered.metadata-button {
-        .frontmatter-container .frontmatter-container-header {
-            background-color: hsla(var(--color-accent-hsl), 0.8);
+    &.anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view),
+    .metadata-button {
+        .metadata-container .metadata-properties-heading {
+            background-color: color-mix(in oklch, var(--color-accent) 80%, transparent);
 
             &:hover {
-                background-color: hsla(var(--color-accent-hsl), 0.7);
+                background-color: color-mix(in oklch, var(--color-accent) 70%, transparent);
             }
 
             &:active {
-                background-color: hsla(var(--color-accent-hsl), 0.6);
+                background-color: color-mix(in oklch, var(--color-accent) 60%, transparent);
             }
         }
     }
 }
 
-.anp-button-metadata-toggle,
-.markdown-rendered.metadata-button {
-    .frontmatter-container {
+.anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view),
+.metadata-button {
+    .metadata-container {
         padding: 0;
 
-        .frontmatter-container-header {
+        .metadata-properties-heading {
+            box-sizing: border-box;
+            display: block;
             width: 32px !important;
-            z-index: 1;
             height: 32px !important;
-            text-overflow: clip;
+            margin-inline-start: auto;
+            margin-inline-end: 0;
+            margin-block: 0;
+            padding: 0;
+            z-index: 1;
             overflow: hidden;
+            text-overflow: clip;
             color: transparent !important;
-            position: absolute;
-            left: calc(100% - 32px);
             border-radius: 6px;
+            position: relative;
         }
 
-        .frontmatter-container-header:after {
+        .metadata-properties-heading:focus-visible {
+            overflow: visible;
+            outline: 2px solid var(--interactive-accent);
+            outline-offset: 2px;
+        }
+
+        .metadata-properties-heading .metadata-properties-title,
+        .metadata-properties-heading .collapse-indicator {
+            display: none;
+        }
+
+        .metadata-properties-heading:after {
             position: absolute;
+            inset-block-start: 5px;
+            inset-inline-start: 5px;
             content: " ";
+            pointer-events: none;
             -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' data-darkreader-inline-stroke='' style='--darkreader-inline-stroke:currentColor;'%3E%3Cpolygon points='12 2 2 7 12 12 22 7 12 2'%3E%3C/polygon%3E%3Cpolyline points='2 17 12 22 22 17'%3E%3C/polyline%3E%3Cpolyline points='2 12 12 17 22 12'%3E%3C/polyline%3E%3C/svg%3E");
             mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' data-darkreader-inline-stroke='' style='--darkreader-inline-stroke:currentColor;'%3E%3Cpolygon points='12 2 2 7 12 12 22 7 12 2'%3E%3C/polygon%3E%3Cpolyline points='2 17 12 22 22 17'%3E%3C/polyline%3E%3Cpolyline points='2 12 12 17 22 12'%3E%3C/polyline%3E%3C/svg%3E");
             -webkit-mask-repeat: no-repeat;
@@ -64,8 +83,12 @@ body:not(.anuppuccin-accent-toggle) {
             color: var(--background-secondary);
             width: 22px;
             height: 22px;
-            margin-left: 5px;
-            margin-top: 5px;
+        }
+
+        .metadata-content {
+            position: relative;
+            inset: auto;
+            width: 100%;
         }
     }
 }

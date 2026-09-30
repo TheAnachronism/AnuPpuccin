@@ -4,8 +4,8 @@ body.is-translucent {
 }
 
 .is-translucent:not(.is-fullscreen) {
-    --nav-collapse-icon-color: rgba(var(--mono-rgb-100), 0.3);
-    --nav-collapse-icon-color-collapsed: rgba(var(--mono-rgb-100), 0.3);
+    --nav-collapse-icon-color: color-mix(in oklch, var(--color-base-100) 30%, transparent);
+    --nav-collapse-icon-color-collapsed: color-mix(in oklch, var(--color-base-100) 30%, transparent);
     --divider-color: rgba(var(--ctp-surface0), 0.15);
 }
 

@@ -64,7 +64,7 @@
         background-color: rgba(var(--ctp-crust), 0.2);
 
         &::selection {
-            background-color: hsla(var(--color-accent-hsl), 0.2);
+            background-color: color-mix(in oklch, var(--color-accent) 20%, transparent);
         }
     }
 

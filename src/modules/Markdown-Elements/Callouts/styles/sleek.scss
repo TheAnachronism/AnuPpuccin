@@ -16,11 +16,11 @@
         background-color: rgba(var(--ctp-mantle), 0.4);
 
         &>.callout-title {
-            background-color: rgba(var(--callout-color), var(--callout-title-opacity, 0.1));
+            background-color: color-mix(in oklch, var(--callout-color) calc(var(--callout-title-opacity, 0.1) * 100%), transparent);
         }
 
         &>.callout-content {
-            border-top: var(--callout-border-width) dashed rgba(var(--callout-color), var(--callout-border-opacity));
+            border-top: var(--callout-border-width) dashed color-mix(in oklch, var(--callout-color) calc(var(--callout-border-opacity) * 100%), transparent);
         }
 
         .list-collapse-indicator {

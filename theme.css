@@ -3374,7 +3374,7 @@ body {
   --callout-padding: 0;
   --callout-title-padding: var(--size-4-2);
   --callout-content-padding: var(--size-4-2);
-  --background-modifier-active: hsla(var(--color-accent-hsl), 0.1);
+  --background-modifier-active: color-mix(in oklch, var(--color-accent) 10%, transparent);
   --pdf-background: var(--background-primary);
   --pdf-dark-opacity: 1;
   --pdf-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 8px transparent;
@@ -3473,14 +3473,14 @@ body.theme-dark {
 .ͼ2 .cm-panels-bottom {
   border-top: 1px solid rgb(var(--ctp-surface1));
 }
+.ͼ2 .cm-panels-bottom input:hover, .ͼ2 .cm-panels-bottom input:focus, .ͼ2 .cm-panels-bottom input:focus-visible {
+  border: none;
+  box-shadow: none;
+}
 .ͼ2 .cm-panels-bottom input {
   background-color: transparent;
   font-family: var(--font-monospace);
   width: 100%;
-}
-.ͼ2 .cm-panels-bottom input:hover, .ͼ2 .cm-panels-bottom input:focus, .ͼ2 .cm-panels-bottom input:focus-visible {
-  border: none;
-  box-shadow: none;
 }
 
 .ͼp .cm-vim-panel {
@@ -3514,7 +3514,7 @@ input.slider,
 .status-bar-item.mod-clickable,
 .titlebar-button,
 .button,
-.frontmatter-container .frontmatter-container-header,
+.metadata-container .metadata-properties-heading,
 .card.u-clickable,
 .list-item-part.clickable-icon,
 .u-clickable,
@@ -3597,14 +3597,6 @@ input.slider,
 .markdown-rendered.rtl .list-bullet {
   float: right;
   margin-right: -12px;
-}
-.anp-button-metadata-toggle .markdown-rendered.rtl .frontmatter-container .frontmatter-container-header {
-  left: unset;
-  right: calc(100% - 32px);
-}
-.anp-button-metadata-toggle .markdown-rendered.rtl .frontmatter-container .frontmatter-container-header:after {
-  margin-left: unset;
-  margin-right: 7px;
 }
 .markdown-rendered.rtl blockquote {
   border-right: var(--blockquote-border-thickness) solid var(--blockquote-border-color);
@@ -3791,7 +3783,7 @@ input.slider,
 }
 
 /*-Padding for banner pages-*/
-.obsidian-banner-wrapper .frontmatter-container {
+.obsidian-banner-wrapper .metadata-container {
   margin-top: 20px;
 }
 
@@ -3855,8 +3847,9 @@ input.slider,
   flex-grow: 1;
 }
 
-/* Hide empty frontmatter (uses :has()) */
-.frontmatter-container:not(:has(.frontmatter-section)) {
+/* Hide empty Properties (uses :has()) */
+.markdown-source-view .metadata-container:not(:has(.metadata-property)),
+.markdown-preview-view .metadata-container:not(:has(.metadata-property)) {
   display: none;
 }
 
@@ -3919,8 +3912,8 @@ body.is-translucent {
 }
 
 .is-translucent:not(.is-fullscreen) {
-  --nav-collapse-icon-color: rgba(var(--mono-rgb-100), 0.3);
-  --nav-collapse-icon-color-collapsed: rgba(var(--mono-rgb-100), 0.3);
+  --nav-collapse-icon-color: color-mix(in oklch, var(--color-base-100) 30%, transparent);
+  --nav-collapse-icon-color-collapsed: color-mix(in oklch, var(--color-base-100) 30%, transparent);
   --divider-color: rgba(var(--ctp-surface0), 0.15);
 }
 
@@ -3964,15 +3957,6 @@ body.is-translucent {
   --title-bar-duration: 300ms;
   --title-bar-target-translate-y: 18px;
   --title-bar-translate-y: 40px;
-  /**
-  * This should fix the drag/click titlebar issue.
-  * 
-  * Invisible boxes are not rendered (as if they were fully transparent),
-  * cannot be interacted with (and behave as if they had pointer-events: none),
-  * and are removed from navigation (similar to display: none).
-  * 
-  * @see: https://drafts.csswg.org/css-display/#visibility
-  */
 }
 .anp-autohide-titlebar:not(.is-mobile) .workspace-leaf-content .view-header {
   margin-top: calc(var(--title-bar-translate-y) * -1);
@@ -4001,6 +3985,17 @@ body.is-translucent {
 }
 .anp-autohide-titlebar:not(.is-mobile) .workspace-leaf-content .view-header-title {
   --file-header-font-size: var(--font-ui-medium);
+}
+.anp-autohide-titlebar:not(.is-mobile) {
+  /**
+  * This should fix the drag/click titlebar issue.
+  * 
+  * Invisible boxes are not rendered (as if they were fully transparent),
+  * cannot be interacted with (and behave as if they had pointer-events: none),
+  * and are removed from navigation (similar to display: none).
+  * 
+  * @see: https://drafts.csswg.org/css-display/#visibility
+  */
 }
 .anp-autohide-titlebar:not(.is-mobile) .workspace-leaf-content .view-header > div {
   transition: visibility var(--title-bar-duration) var(--title-bar-delay);
@@ -4036,14 +4031,6 @@ body:not(.anp-alternate-tab-toggle):not(.anp-disable-newtab-align) .workspace-sp
 }
 .anp-safari-tab-toggle .workspace-split.mod-vertical.mod-root .workspace-tabs .workspace-tab-header-container .workspace-tab-header-container-inner {
   margin: 5px 0 !important;
-  gap: var(--anp-safari-tab-gap, 10px);
-}
-.anp-safari-tab-toggle .workspace-split.mod-vertical.mod-root .workspace-tabs .workspace-tab-header-container .workspace-tab-header-container-inner .workspace-tab-header {
-  border-radius: var(--anp-safari-tab-radius, 5px);
-  border: var(--anp-safari-border-width, 1px) solid var(--tab-outline-color);
-  background-color: var(--tab-background-inactive);
-  color: var(--text-muted);
-  max-width: var(--tab-max-width);
 }
 .anp-safari-tab-toggle .workspace-split.mod-vertical.mod-root .workspace-tabs .workspace-tab-header-container .workspace-tab-header-container-inner .workspace-tab-header:not(.is-active) {
   --icon-color: var(--text-muted);
@@ -4055,6 +4042,13 @@ body:not(.anp-alternate-tab-toggle):not(.anp-disable-newtab-align) .workspace-sp
 .anp-safari-tab-toggle .workspace-split.mod-vertical.mod-root .workspace-tabs .workspace-tab-header-container .workspace-tab-header-container-inner .workspace-tab-header::before, .anp-safari-tab-toggle .workspace-split.mod-vertical.mod-root .workspace-tabs .workspace-tab-header-container .workspace-tab-header-container-inner .workspace-tab-header::after {
   display: none;
 }
+.anp-safari-tab-toggle .workspace-split.mod-vertical.mod-root .workspace-tabs .workspace-tab-header-container .workspace-tab-header-container-inner .workspace-tab-header {
+  border-radius: var(--anp-safari-tab-radius, 5px);
+  border: var(--anp-safari-border-width, 1px) solid var(--tab-outline-color);
+  background-color: var(--tab-background-inactive);
+  color: var(--text-muted);
+  max-width: var(--tab-max-width);
+}
 .anp-safari-tab-toggle .workspace-split.mod-vertical.mod-root .workspace-tabs .workspace-tab-header-container .workspace-tab-header-container-inner .workspace-tab-header.is-active {
   background-color: var(--tab-background-active);
   max-width: var(--tab-max-width);
@@ -4063,16 +4057,19 @@ body:not(.anp-alternate-tab-toggle):not(.anp-disable-newtab-align) .workspace-sp
 .anp-safari-tab-toggle .workspace-split.mod-vertical.mod-root .workspace-tabs .workspace-tab-header-container .workspace-tab-header-container-inner .workspace-tab-header:not(.is-active):hover .workspace-tab-header-inner {
   background-color: transparent;
 }
+.anp-safari-tab-toggle .workspace-split.mod-vertical.mod-root .workspace-tabs .workspace-tab-header-container .workspace-tab-header-container-inner {
+  gap: var(--anp-safari-tab-gap, 10px);
+}
 .anp-safari-tab-toggle:not(.anp-disable-newtab-align) .workspace-tab-header-container-inner {
   width: 100%;
 }
 
-.anp-safari-tab-toggle.anp-safari-tab-animated .workspace-split.mod-vertical.mod-root .workspace-tabs .workspace-tab-header-container .workspace-tab-header-container-inner .workspace-tab-header {
-  transition: max-width 400ms ease-in-out, width 400ms ease-in-out, flex-grow 400ms ease, background-color 150ms;
-}
 .anp-safari-tab-toggle.anp-safari-tab-animated .workspace-split.mod-vertical.mod-root .workspace-tabs .workspace-tab-header-container .workspace-tab-header-container-inner .workspace-tab-header.is-active {
   flex-grow: 1.67;
   max-width: var(--tab-max-width-active);
+}
+.anp-safari-tab-toggle.anp-safari-tab-animated .workspace-split.mod-vertical.mod-root .workspace-tabs .workspace-tab-header-container .workspace-tab-header-container-inner .workspace-tab-header {
+  transition: max-width 400ms ease-in-out, width 400ms ease-in-out, flex-grow 400ms ease, background-color 150ms;
 }
 
 .anp-alternate-tab-toggle,
@@ -4214,10 +4211,12 @@ body:not(.anp-alternate-tab-toggle):not(.anp-disable-newtab-align) .workspace-sp
 }
 .anp-mini-tab-toggle .workspace-split:not(.mod-left-split):not(.mod-right-split) .workspace-tab-header-container-inner .workspace-tab-header {
   background-color: transparent;
-  box-shadow: none;
 }
 .anp-mini-tab-toggle .workspace-split:not(.mod-left-split):not(.mod-right-split) .workspace-tab-header-container-inner .workspace-tab-header::before, .anp-mini-tab-toggle .workspace-split:not(.mod-left-split):not(.mod-right-split) .workspace-tab-header-container-inner .workspace-tab-header::after {
   display: none;
+}
+.anp-mini-tab-toggle .workspace-split:not(.mod-left-split):not(.mod-right-split) .workspace-tab-header-container-inner .workspace-tab-header {
+  box-shadow: none;
 }
 .anp-mini-tab-toggle .workspace-split:not(.mod-left-split):not(.mod-right-split) .workspace-tab-header-container-inner .workspace-tab-header.is-active {
   border-bottom: 2px solid var(--color-accent);
@@ -4519,11 +4518,11 @@ body.anp-border-layout .workspace .workspace-split.mod-left-split {
 body.anp-border-layout .workspace .workspace-split.mod-left-split .workspace-tabs {
   background-color: var(--card-background-color);
 }
-body.anp-border-layout .workspace .workspace-split.mod-left-split .workspace-tabs .workspace-tab-container {
-  border-left: var(--border-border-style);
-}
 body.anp-border-layout .workspace .workspace-split.mod-left-split .workspace-tabs .workspace-tab-container .workspace-leaf {
   background-color: var(--card-foreground-color);
+}
+body.anp-border-layout .workspace .workspace-split.mod-left-split .workspace-tabs .workspace-tab-container {
+  border-left: var(--border-border-style);
 }
 body.anp-border-layout .workspace .workspace-split.mod-left-split .workspace-tabs:not(.mod-top) .workspace-tab-header-container {
   border-left: var(--border-border-style);
@@ -4547,11 +4546,11 @@ body.anp-border-layout .workspace .workspace-split.mod-right-split {
 body.anp-border-layout .workspace .workspace-split.mod-right-split .workspace-tabs {
   background-color: var(--card-background-color);
 }
-body.anp-border-layout .workspace .workspace-split.mod-right-split .workspace-tabs .workspace-tab-container {
-  border-right: var(--border-border-style);
-}
 body.anp-border-layout .workspace .workspace-split.mod-right-split .workspace-tabs .workspace-tab-container .workspace-leaf {
   background-color: var(--card-foreground-color);
+}
+body.anp-border-layout .workspace .workspace-split.mod-right-split .workspace-tabs .workspace-tab-container {
+  border-right: var(--border-border-style);
 }
 body.anp-border-layout .workspace .workspace-split.mod-right-split .workspace-tabs:not(.mod-top) .workspace-tab-header-container {
   border-right: var(--border-border-style);
@@ -4563,11 +4562,11 @@ body.anp-border-layout .workspace .workspace-split.mod-right-split .workspace-ta
   border-top: var(--border-border-style);
   border-right: var(--border-border-style);
 }
-body.anp-border-layout .workspace .workspace-split:not(.mod-right-split):not(.mod-left-split) {
-  background-color: var(--card-background-color);
-}
 body.anp-border-layout .workspace .workspace-split:not(.mod-right-split):not(.mod-left-split) > .workspace-split {
   padding-bottom: 0;
+}
+body.anp-border-layout .workspace .workspace-split:not(.mod-right-split):not(.mod-left-split) {
+  background-color: var(--card-background-color);
 }
 body.anp-border-layout .workspace .workspace-split:not(.mod-right-split):not(.mod-left-split) .workspace-tabs {
   background-color: var(--card-background-color);
@@ -4686,11 +4685,11 @@ Support me: https://buymeacoffee.com/AnubisNekhet
 .callout:not([data-callout-metadata*=revert]) {
   --callout-blend-mode: normal;
 }
-.callout:not([data-callout-metadata*=revert]) > .callout-title > .callout-title-inner {
-  flex-grow: var(--anp-callout-fold-position, 0);
-}
 .theme-light .callout:not([data-callout-metadata*=revert]) > .callout-title > .callout-title-inner {
   color: var(--text-normal);
+}
+.callout:not([data-callout-metadata*=revert]) > .callout-title > .callout-title-inner {
+  flex-grow: var(--anp-callout-fold-position, 0);
 }
 .callout:not([data-callout-metadata*=revert]):not(.is-collapsible) > .callout-title .callout-title-inner {
   font-weight: 500;
@@ -4733,7 +4732,7 @@ Support me: https://buymeacoffee.com/AnubisNekhet
 .callout[data-callout-metadata*=anp-block]:not([data-callout-metadata*=revert],
 [data-callout=blank-container],
 [data-callout=multi-column]) {
-  border-left: var(--size-2-3) solid rgb(var(--callout-color));
+  border-left: var(--size-2-3) solid var(--callout-color);
 }
 
 .anp-callout-sleek .callout:not([data-callout-metadata*=anp-block],
@@ -4758,7 +4757,7 @@ Support me: https://buymeacoffee.com/AnubisNekhet
 .callout[data-callout-metadata*=anp-sleek]:not([data-callout-metadata*=revert],
 [data-callout=blank-container],
 [data-callout=multi-column]) > .callout-title {
-  background-color: rgba(var(--callout-color), var(--callout-title-opacity, 0.1));
+  background-color: color-mix(in oklch, var(--callout-color) calc(var(--callout-title-opacity, 0.1) * 100%), transparent);
 }
 .anp-callout-sleek .callout:not([data-callout-metadata*=anp-block],
 [data-callout-metadata*=anp-vanilla-normal],
@@ -4768,7 +4767,7 @@ Support me: https://buymeacoffee.com/AnubisNekhet
 .callout[data-callout-metadata*=anp-sleek]:not([data-callout-metadata*=revert],
 [data-callout=blank-container],
 [data-callout=multi-column]) > .callout-content {
-  border-top: var(--callout-border-width) dashed rgba(var(--callout-color), var(--callout-border-opacity));
+  border-top: var(--callout-border-width) dashed color-mix(in oklch, var(--callout-color) calc(var(--callout-border-opacity) * 100%), transparent);
 }
 .anp-callout-sleek .callout:not([data-callout-metadata*=anp-block],
 [data-callout-metadata*=anp-vanilla-normal],
@@ -4800,7 +4799,7 @@ Support me: https://buymeacoffee.com/AnubisNekhet
 .callout[data-callout-metadata*=anp-vanilla-normal]:not([data-callout-metadata*=revert],
 [data-callout=blank-container],
 [data-callout=multi-column]) > .callout-title {
-  background-color: rgba(var(--callout-color), var(--callout-title-opacity, 0.1));
+  background-color: color-mix(in oklch, var(--callout-color) calc(var(--callout-title-opacity, 0.1) * 100%), transparent);
 }
 .anp-callout-vanilla-normal .callout:not([data-callout-metadata*=anp-sleek],
 [data-callout-metadata*=anp-vanilla-plus],
@@ -4828,7 +4827,7 @@ Support me: https://buymeacoffee.com/AnubisNekhet
 .callout[data-callout-metadata*=anp-vanilla-normal]:not([data-callout-metadata*=revert],
 [data-callout=blank-container],
 [data-callout=multi-column]) > .callout-content {
-  border-left: var(--size-2-3) solid rgb(var(--callout-color));
+  border-left: var(--size-2-3) solid var(--callout-color);
 }
 
 .anp-callout-vanilla-plus .callout:not([data-callout-metadata*=anp-sleek],
@@ -4849,8 +4848,8 @@ Support me: https://buymeacoffee.com/AnubisNekhet
 .callout[data-callout-metadata*=anp-vanilla-plus]:not([data-callout-metadata*=revert],
 [data-callout=blank-container],
 [data-callout=multi-column]) > .callout-title {
-  background-color: rgba(var(--callout-color), var(--callout-title-opacity, 0.1));
-  border-left: var(--size-2-3) solid rgb(var(--callout-color));
+  background-color: color-mix(in oklch, var(--callout-color) calc(var(--callout-title-opacity, 0.1) * 100%), transparent);
+  border-left: var(--size-2-3) solid var(--callout-color);
 }
 .anp-callout-vanilla-plus .callout:not([data-callout-metadata*=anp-sleek],
 [data-callout-metadata*=anp-vanilla-normal],
@@ -4865,51 +4864,51 @@ Support me: https://buymeacoffee.com/AnubisNekhet
 
 /*---------------CALLOUT COLORS----------------*/
 .anp-callout-color-toggle .callout[data-callout=note] {
-  --callout-color: var(--ctp-blue);
+  --callout-color: rgb(var(--ctp-blue));
 }
 .anp-callout-color-toggle .callout[data-callout=abstract], .anp-callout-color-toggle .callout[data-callout=summary], .anp-callout-color-toggle .callout[data-callout=tldr], .anp-callout-color-toggle .callout[data-callout=seealso] {
-  --callout-color: var(--ctp-blue);
+  --callout-color: rgb(var(--ctp-blue));
 }
 .anp-callout-color-toggle .callout[data-callout=info], .anp-callout-color-toggle .callout[data-callout=todo], .anp-callout-color-toggle .callout[data-callout=tip], .anp-callout-color-toggle .callout[data-callout=hint], .anp-callout-color-toggle .callout[data-callout=important] {
-  --callout-color: var(--ctp-teal);
+  --callout-color: rgb(var(--ctp-teal));
 }
 .anp-callout-color-toggle .callout[data-callout=success], .anp-callout-color-toggle .callout[data-callout=check], .anp-callout-color-toggle .callout[data-callout=done], .anp-callout-color-toggle .callout[data-callout=question], .anp-callout-color-toggle .callout[data-callout=help], .anp-callout-color-toggle .callout[data-callout=faq] {
-  --callout-color: var(--ctp-green);
+  --callout-color: rgb(var(--ctp-green));
 }
 .anp-callout-color-toggle .callout[data-callout=warning], .anp-callout-color-toggle .callout[data-callout=caution], .anp-callout-color-toggle .callout[data-callout=attention] {
-  --callout-color: var(--ctp-yellow);
+  --callout-color: rgb(var(--ctp-yellow));
 }
 .anp-callout-color-toggle .callout[data-callout=failure], .anp-callout-color-toggle .callout[data-callout=fail], .anp-callout-color-toggle .callout[data-callout=missing] {
-  --callout-color: var(--ctp-maroon);
+  --callout-color: rgb(var(--ctp-maroon));
 }
 .anp-callout-color-toggle .callout[data-callout=danger], .anp-callout-color-toggle .callout[data-callout=error], .anp-callout-color-toggle .callout[data-callout=bug] {
-  --callout-color: var(--ctp-red);
+  --callout-color: rgb(var(--ctp-red));
 }
 .anp-callout-color-toggle .callout[data-callout=example] {
-  --callout-color: var(--ctp-mauve);
+  --callout-color: rgb(var(--ctp-mauve));
 }
 .anp-callout-color-toggle .callout[data-callout=quote], .anp-callout-color-toggle .callout[data-callout=cite] {
-  --callout-color: var(--ctp-surface2);
+  --callout-color: rgb(var(--ctp-surface2));
 }
 .anp-callout-color-toggle.anuppuccin-accent-toggle .callout[data-callout=note] {
-  --callout-color: var(--ctp-accent);
+  --callout-color: rgb(var(--ctp-accent));
 }
 
 /*---------------CUSTOM CALLOUTS---------------*/
 .callout[data-callout=formula] {
-  --callout-color: var(--ctp-text);
+  --callout-color: rgb(var(--ctp-text));
   width: fit-content;
   height: fit-content;
   mix-blend-mode: normal;
   background-color: transparent !important;
 }
-.callout[data-callout=formula] .callout-title {
-  background-color: rgba(var(--callout-color), 0.05) !important;
-  color: var(--ctp-text);
-}
 .callout[data-callout=formula] .callout-title .callout-icon,
 .callout[data-callout=formula] .callout-title .callout-fold {
   display: none;
+}
+.callout[data-callout=formula] .callout-title {
+  background-color: color-mix(in oklch, var(--callout-color) 5%, transparent) !important;
+  color: var(--ctp-text);
 }
 .callout[data-callout=formula] .callout-content {
   background-color: transparent !important;
@@ -4931,10 +4930,10 @@ Support me: https://buymeacoffee.com/AnubisNekhet
   --text-highlight-bg: rgba(var(--anp-highlight-color, var(--ctp-yellow)), 0.2);
 }
 
-.markdown-rendered .internal-link {
+.markdown-rendered .internal-link:hover, .markdown-rendered .internal-link:active, .markdown-rendered .internal-link.is-unresolved:hover, .markdown-rendered .internal-link.is-unresolved {
   text-decoration-line: none;
 }
-.markdown-rendered .internal-link:hover, .markdown-rendered .internal-link:active, .markdown-rendered .internal-link.is-unresolved:hover, .markdown-rendered .internal-link.is-unresolved {
+.markdown-rendered .internal-link {
   text-decoration-line: none;
 }
 
@@ -5774,8 +5773,14 @@ hr {
   font-size: var(--anp-latex-block-font-size, var(--font-size-lg));
 }
 
-.anp-toggle-metadata .frontmatter-container,
-.markdown-rendered.hide-metadata .frontmatter-container {
+.anp-toggle-metadata,
+.hide-metadata {
+  --metadata-display-reading: none;
+  --metadata-display-editing: none;
+}
+
+.anp-toggle-metadata :is(.markdown-source-view, .markdown-preview-view) .metadata-container,
+.hide-metadata .metadata-container {
   display: none;
 }
 
@@ -6031,15 +6036,15 @@ body.rainbow-tags {
   margin-left: 10px;
 }
 
+.anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-card] > .callout-content, .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-card] > .callout-content {
+  padding: 0;
+  background-color: var(--background-primary);
+  overflow-y: hidden;
+}
 .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-card], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-card] {
   background-color: var(--background-primary);
   border-radius: 6px;
   mix-blend-mode: normal;
-  overflow-y: hidden;
-}
-.anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-card] > .callout-content, .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-card] > .callout-content {
-  padding: 0;
-  background-color: var(--background-primary);
   overflow-y: hidden;
 }
 .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-card-prop], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-card-prop] {
@@ -6053,10 +6058,6 @@ body.rainbow-tags {
 .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-card-prop] > .callout-content, .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-card-prop] > .callout-content {
   padding: 0;
 }
-.anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop] {
-  border: none;
-  padding: 0;
-}
 .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop] > .callout-content, .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop] > .callout-content {
   margin: 0 10px 7px 10px;
   background-color: var(--background-primary);
@@ -6067,41 +6068,49 @@ body.rainbow-tags {
 }
 .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop] > .callout-title, .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop] > .callout-title {
   text-transform: uppercase;
-  background-color: transparent;
 }
 .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop] > .callout-title > .callout-title-inner, .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop] > .callout-title > .callout-title-inner {
   color: rgba(var(--ctp-text), 0.7);
   font-size: 80%;
 }
-.anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-index], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-index] {
-  border-radius: 0;
-  margin: -1px;
+.anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop] > .callout-title, .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop] > .callout-title {
+  background-color: transparent;
+}
+.anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop] {
+  border: none;
+  padding: 0;
 }
 .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-index] > .callout-content, .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-index] > .callout-content {
   padding: 0;
 }
+.anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-index], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-index] {
+  border-radius: 0;
+}
 .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-index] p:first-child, .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-index] p:first-child {
   margin-bottom: 0;
 }
-.anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-sidebar], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-sidebar] {
-  background-color: var(--background-secondary);
+.anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-index], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-index] {
+  margin: -1px;
 }
 .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-sidebar] > .callout-content, .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-sidebar] > .callout-content {
   padding-right: 0;
   padding-left: 0;
   background-color: var(--background-secondary);
 }
+.anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-sidebar], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-sidebar] {
+  background-color: var(--background-secondary);
+}
 .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop-image] > .callout-content, .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop-image] > .callout-content {
   padding: 0;
+}
+.anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-body] > .callout-content, .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-body] > .callout-content {
+  padding: var(--callout-padding);
+  background-color: var(--background-primary);
 }
 .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-body], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-body] {
   border-width: 0 1px 0 0;
   background-color: var(--background-primary);
   mix-blend-mode: normal;
-}
-.anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-body] > .callout-content, .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-body] > .callout-content {
-  padding: var(--callout-padding);
-  background-color: var(--background-primary);
 }
 .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-index], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-card-prop], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop-image], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-sidebar], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-body], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-card], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-index], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-card-prop], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-prop-image], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-sidebar], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-body], .anp-callout-toggle.anp-callout-toggle.anp-callout-toggle.anp-callout-sleek.anp-callout-normal-toggle div.callout:not([data-callout-metadata*=revert])[data-callout=capacities-card] {
   border-color: var(--background-modifier-border);
@@ -6131,52 +6140,72 @@ body.rainbow-tags {
 }
 
 /*-Button for metadata-*/
-body.anuppuccin-accent-toggle.anp-button-metadata-toggle .frontmatter-container .frontmatter-container-header,
-body.anuppuccin-accent-toggle .markdown-rendered.metadata-button .frontmatter-container .frontmatter-container-header {
+body.anuppuccin-accent-toggle.anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view) .metadata-container .metadata-properties-heading,
+body.anuppuccin-accent-toggle .metadata-button .metadata-container .metadata-properties-heading {
   background-color: rgba(var(--ctp-accent), 0.8);
 }
-body.anuppuccin-accent-toggle.anp-button-metadata-toggle .frontmatter-container .frontmatter-container-header:hover,
-body.anuppuccin-accent-toggle .markdown-rendered.metadata-button .frontmatter-container .frontmatter-container-header:hover {
+body.anuppuccin-accent-toggle.anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view) .metadata-container .metadata-properties-heading:hover,
+body.anuppuccin-accent-toggle .metadata-button .metadata-container .metadata-properties-heading:hover {
   background-color: rgba(var(--ctp-accent), 0.7);
 }
-body.anuppuccin-accent-toggle.anp-button-metadata-toggle .frontmatter-container .frontmatter-container-header:active,
-body.anuppuccin-accent-toggle .markdown-rendered.metadata-button .frontmatter-container .frontmatter-container-header:active {
+body.anuppuccin-accent-toggle.anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view) .metadata-container .metadata-properties-heading:active,
+body.anuppuccin-accent-toggle .metadata-button .metadata-container .metadata-properties-heading:active {
   background-color: rgba(var(--ctp-accent), 0.6);
 }
 
-body:not(.anuppuccin-accent-toggle).anp-button-metadata-toggle .frontmatter-container .frontmatter-container-header,
-body:not(.anuppuccin-accent-toggle) .markdown-rendered.metadata-button .frontmatter-container .frontmatter-container-header {
-  background-color: hsla(var(--color-accent-hsl), 0.8);
+body:not(.anuppuccin-accent-toggle).anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view) .metadata-container .metadata-properties-heading,
+body:not(.anuppuccin-accent-toggle) .metadata-button .metadata-container .metadata-properties-heading {
+  background-color: color-mix(in oklch, var(--color-accent) 80%, transparent);
 }
-body:not(.anuppuccin-accent-toggle).anp-button-metadata-toggle .frontmatter-container .frontmatter-container-header:hover,
-body:not(.anuppuccin-accent-toggle) .markdown-rendered.metadata-button .frontmatter-container .frontmatter-container-header:hover {
-  background-color: hsla(var(--color-accent-hsl), 0.7);
+body:not(.anuppuccin-accent-toggle).anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view) .metadata-container .metadata-properties-heading:hover,
+body:not(.anuppuccin-accent-toggle) .metadata-button .metadata-container .metadata-properties-heading:hover {
+  background-color: color-mix(in oklch, var(--color-accent) 70%, transparent);
 }
-body:not(.anuppuccin-accent-toggle).anp-button-metadata-toggle .frontmatter-container .frontmatter-container-header:active,
-body:not(.anuppuccin-accent-toggle) .markdown-rendered.metadata-button .frontmatter-container .frontmatter-container-header:active {
-  background-color: hsla(var(--color-accent-hsl), 0.6);
+body:not(.anuppuccin-accent-toggle).anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view) .metadata-container .metadata-properties-heading:active,
+body:not(.anuppuccin-accent-toggle) .metadata-button .metadata-container .metadata-properties-heading:active {
+  background-color: color-mix(in oklch, var(--color-accent) 60%, transparent);
 }
 
-.anp-button-metadata-toggle .frontmatter-container,
-.markdown-rendered.metadata-button .frontmatter-container {
+.anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view) .metadata-container,
+.metadata-button .metadata-container {
   padding: 0;
 }
-.anp-button-metadata-toggle .frontmatter-container .frontmatter-container-header,
-.markdown-rendered.metadata-button .frontmatter-container .frontmatter-container-header {
+.anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view) .metadata-container .metadata-properties-heading,
+.metadata-button .metadata-container .metadata-properties-heading {
+  box-sizing: border-box;
+  display: block;
   width: 32px !important;
-  z-index: 1;
   height: 32px !important;
-  text-overflow: clip;
+  margin-inline-start: auto;
+  margin-inline-end: 0;
+  margin-block: 0;
+  padding: 0;
+  z-index: 1;
   overflow: hidden;
+  text-overflow: clip;
   color: transparent !important;
-  position: absolute;
-  left: calc(100% - 32px);
   border-radius: 6px;
+  position: relative;
 }
-.anp-button-metadata-toggle .frontmatter-container .frontmatter-container-header:after,
-.markdown-rendered.metadata-button .frontmatter-container .frontmatter-container-header:after {
+.anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view) .metadata-container .metadata-properties-heading:focus-visible,
+.metadata-button .metadata-container .metadata-properties-heading:focus-visible {
+  overflow: visible;
+  outline: 2px solid var(--interactive-accent);
+  outline-offset: 2px;
+}
+.anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view) .metadata-container .metadata-properties-heading .metadata-properties-title,
+.anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view) .metadata-container .metadata-properties-heading .collapse-indicator,
+.metadata-button .metadata-container .metadata-properties-heading .metadata-properties-title,
+.metadata-button .metadata-container .metadata-properties-heading .collapse-indicator {
+  display: none;
+}
+.anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view) .metadata-container .metadata-properties-heading:after,
+.metadata-button .metadata-container .metadata-properties-heading:after {
   position: absolute;
+  inset-block-start: 5px;
+  inset-inline-start: 5px;
   content: " ";
+  pointer-events: none;
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' data-darkreader-inline-stroke='' style='--darkreader-inline-stroke:currentColor;'%3E%3Cpolygon points='12 2 2 7 12 12 22 7 12 2'%3E%3C/polygon%3E%3Cpolyline points='2 17 12 22 22 17'%3E%3C/polyline%3E%3Cpolyline points='2 12 12 17 22 12'%3E%3C/polyline%3E%3C/svg%3E");
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' data-darkreader-inline-stroke='' style='--darkreader-inline-stroke:currentColor;'%3E%3Cpolygon points='12 2 2 7 12 12 22 7 12 2'%3E%3C/polygon%3E%3Cpolyline points='2 17 12 22 22 17'%3E%3C/polyline%3E%3Cpolyline points='2 12 12 17 22 12'%3E%3C/polyline%3E%3C/svg%3E");
   -webkit-mask-repeat: no-repeat;
@@ -6186,8 +6215,12 @@ body:not(.anuppuccin-accent-toggle) .markdown-rendered.metadata-button .frontmat
   color: var(--background-secondary);
   width: 22px;
   height: 22px;
-  margin-left: 5px;
-  margin-top: 5px;
+}
+.anp-button-metadata-toggle :is(.markdown-source-view, .markdown-preview-view) .metadata-container .metadata-content,
+.metadata-button .metadata-container .metadata-content {
+  position: relative;
+  inset: auto;
+  width: 100%;
 }
 
 /*-------Tweak for Minimal Cards--------------
@@ -6294,8 +6327,9 @@ body.anp-colorful-frame-icon-toggle-dark.theme-dark {
   color: var(--color-accent);
 }
 .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout) .mod-top .workspace-tab-header-container, .anp-colorful-frame.anp-colorful-frame.anp-card-layout, .anp-colorful-frame.anp-colorful-frame.anp-card-layout .workspace-tabs.mod-top, .anp-colorful-frame.anp-colorful-frame.anp-card-layout .sidebar-toggle-button, .anp-colorful-frame.anp-colorful-frame.anp-card-layout .workspace-ribbon.mod-left:before, .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout) .workspace-ribbon.mod-left:before {
-  --tab-container-background: hsla(var(--anp-colorful-frame-color-hsl, var(--color-accent-hsl)), var(--anp-colorful-frame-opacity, 1));
-  --titlebar-background: hsla(var(--anp-colorful-frame-color-hsl, var(--color-accent-hsl)), var(--anp-colorful-frame-opacity, 1));
+  --anp-colorful-frame-resolved-color: hsl(var(--anp-colorful-frame-color-hsl));
+  --tab-container-background: color-mix(in oklch, var(--anp-colorful-frame-resolved-color, var(--color-accent)) calc(100% * var(--anp-colorful-frame-opacity, 1)), transparent);
+  --titlebar-background: color-mix(in oklch, var(--anp-colorful-frame-resolved-color, var(--color-accent)) calc(100% * var(--anp-colorful-frame-opacity, 1)), transparent);
 }
 .anp-colorful-frame.anp-card-layout {
   --divider-color-hover: var(--background-secondary-alt);
@@ -6325,9 +6359,6 @@ body.anp-colorful-frame-icon-toggle-dark.theme-dark {
 .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).is-focused .mod-top .workspace-tab-header-new-tab .clickable-icon:hover {
   color: var(--colorful-icon-color-alt);
 }
-.anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).anp-mini-tab-toggle .mod-top, .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).is-focused.anp-mini-tab-toggle .mod-top, .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).is-focused.anp-mini-tab-toggle .mod-top, .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).is-focused.is-focused.anp-mini-tab-toggle .mod-top {
-  --tab-text-color-focused-active-current: var(--colorful-icon-color-alt);
-}
 .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).anp-mini-tab-toggle .mod-top .workspace-tab-header,
 .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).anp-mini-tab-toggle .mod-top .workspace-tab-header.is-active, .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).is-focused.anp-mini-tab-toggle .mod-top .workspace-tab-header,
 .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).is-focused.anp-mini-tab-toggle .mod-top .workspace-tab-header.is-active, .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).is-focused.anp-mini-tab-toggle .mod-top .workspace-tab-header,
@@ -6344,6 +6375,9 @@ body.anp-colorful-frame-icon-toggle-dark.theme-dark {
 .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).is-focused.anp-mini-tab-toggle .mod-top .workspace-tab-header.is-active .workspace-tab-header-inner-close-button, .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).is-focused.is-focused.anp-mini-tab-toggle .mod-top .workspace-tab-header .workspace-tab-header-inner-close-button,
 .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).is-focused.is-focused.anp-mini-tab-toggle .mod-top .workspace-tab-header.is-active .workspace-tab-header-inner-close-button {
   --tab-text-color-focused: var(--colorful-icon-color-alt);
+  --tab-text-color-focused-active-current: var(--colorful-icon-color-alt);
+}
+.anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).anp-mini-tab-toggle .mod-top, .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).is-focused.anp-mini-tab-toggle .mod-top, .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).is-focused.anp-mini-tab-toggle .mod-top, .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout).is-focused.is-focused.anp-mini-tab-toggle .mod-top {
   --tab-text-color-focused-active-current: var(--colorful-icon-color-alt);
 }
 .anp-colorful-frame:not(.anp-card-layout, .anp-border-layout) .mod-right-split .mod-top .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
@@ -6644,11 +6678,6 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   --checkbox-color: rgb(var(--ctp-green));
   --checkbox-color-hover: rgb(var(--ctp-green));
 }
-.anp-custom-checkboxes [data-task="!"] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task="!"] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task="!"][type=checkbox]:checked {
-  --checkbox-color: rgb(var(--ctp-yellow));
-  --checkbox-color-hover: rgb(var(--ctp-yellow));
-}
 .anp-custom-checkboxes [data-task="!"] > input[type=checkbox]:checked:after,
 .anp-custom-checkboxes [data-task="!"] > p > input[type=checkbox]:checked:after, .anp-custom-checkboxes [data-task="!"][type=checkbox]:checked:after {
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 512'%3E%3C!--!  --%3E%3Cpath d='M96 64c0-17.7-14.3-32-32-32S32 46.3 32 64V320c0 17.7 14.3 32 32 32s32-14.3 32-32V64zM64 480c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40s17.9 40 40 40z'/%3E%3C/svg%3E");
@@ -6662,11 +6691,10 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task="?"] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task="?"] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task="?"][type=checkbox]:checked {
-  --checkbox-color: transparent;
-  --checkbox-color-hover: transparent;
-  border-width: 0;
+.anp-custom-checkboxes [data-task="!"] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task="!"] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task="!"][type=checkbox]:checked {
+  --checkbox-color: rgb(var(--ctp-yellow));
+  --checkbox-color-hover: rgb(var(--ctp-yellow));
 }
 .anp-custom-checkboxes [data-task="?"] > input[type=checkbox]:checked:after,
 .anp-custom-checkboxes [data-task="?"] > p > input[type=checkbox]:checked:after, .anp-custom-checkboxes [data-task="?"][type=checkbox]:checked:after {
@@ -6683,14 +6711,11 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task="-"] {
-  text-decoration: var(--checklist-done-decoration);
-  color: var(--checklist-done-color);
-}
-.anp-custom-checkboxes [data-task="-"] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task="-"] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task="-"][type=checkbox]:checked {
-  --checkbox-color: rgb(var(--ctp-red));
-  --checkbox-color-hover: rgb(var(--ctp-red));
+.anp-custom-checkboxes [data-task="?"] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task="?"] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task="?"][type=checkbox]:checked {
+  --checkbox-color: transparent;
+  --checkbox-color-hover: transparent;
+  border-width: 0;
 }
 .anp-custom-checkboxes [data-task="-"] > input[type=checkbox]:checked:after,
 .anp-custom-checkboxes [data-task="-"] > p > input[type=checkbox]:checked:after, .anp-custom-checkboxes [data-task="-"][type=checkbox]:checked:after {
@@ -6705,11 +6730,14 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task=b] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task=b] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=b][type=checkbox]:checked {
-  --checkbox-color: transparent;
-  --checkbox-color-hover: transparent;
-  border-width: 0;
+.anp-custom-checkboxes [data-task="-"] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task="-"] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task="-"][type=checkbox]:checked {
+  --checkbox-color: rgb(var(--ctp-red));
+  --checkbox-color-hover: rgb(var(--ctp-red));
+}
+.anp-custom-checkboxes [data-task="-"] {
+  text-decoration: var(--checklist-done-decoration);
+  color: var(--checklist-done-color);
 }
 .anp-custom-checkboxes [data-task=b] > input[type=checkbox]:checked:after,
 .anp-custom-checkboxes [data-task=b] > p > input[type=checkbox]:checked:after, .anp-custom-checkboxes [data-task=b][type=checkbox]:checked:after {
@@ -6726,8 +6754,8 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task=I] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task=I] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=I][type=checkbox]:checked {
+.anp-custom-checkboxes [data-task=b] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task=b] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=b][type=checkbox]:checked {
   --checkbox-color: transparent;
   --checkbox-color-hover: transparent;
   border-width: 0;
@@ -6747,8 +6775,8 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task=p] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task=p] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=p][type=checkbox]:checked {
+.anp-custom-checkboxes [data-task=I] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task=I] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=I][type=checkbox]:checked {
   --checkbox-color: transparent;
   --checkbox-color-hover: transparent;
   border-width: 0;
@@ -6768,8 +6796,8 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task=c] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task=c] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=c][type=checkbox]:checked {
+.anp-custom-checkboxes [data-task=p] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task=p] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=p][type=checkbox]:checked {
   --checkbox-color: transparent;
   --checkbox-color-hover: transparent;
   border-width: 0;
@@ -6789,8 +6817,8 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task=i] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task=i] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=i][type=checkbox]:checked {
+.anp-custom-checkboxes [data-task=c] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task=c] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=c][type=checkbox]:checked {
   --checkbox-color: transparent;
   --checkbox-color-hover: transparent;
   border-width: 0;
@@ -6810,8 +6838,8 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task=l] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task=l] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=l][type=checkbox]:checked {
+.anp-custom-checkboxes [data-task=i] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task=i] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=i][type=checkbox]:checked {
   --checkbox-color: transparent;
   --checkbox-color-hover: transparent;
   border-width: 0;
@@ -6831,8 +6859,8 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task="*"] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task="*"] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task="*"][type=checkbox]:checked {
+.anp-custom-checkboxes [data-task=l] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task=l] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=l][type=checkbox]:checked {
   --checkbox-color: transparent;
   --checkbox-color-hover: transparent;
   border-width: 0;
@@ -6852,8 +6880,8 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task=n] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task=n] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=n][type=checkbox]:checked {
+.anp-custom-checkboxes [data-task="*"] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task="*"] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task="*"][type=checkbox]:checked {
   --checkbox-color: transparent;
   --checkbox-color-hover: transparent;
   border-width: 0;
@@ -6873,8 +6901,8 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task=S] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task=S] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=S][type=checkbox]:checked {
+.anp-custom-checkboxes [data-task=n] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task=n] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=n][type=checkbox]:checked {
   --checkbox-color: transparent;
   --checkbox-color-hover: transparent;
   border-width: 0;
@@ -6894,11 +6922,11 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task="/"] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task="/"] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task="/"][type=checkbox]:checked {
-  --checkbox-color: rgba(var(--ctp-subtext0), 0.3);
-  --checkbox-color-hover: rgba(var(--ctp-subtext0), 0.3);
-  border-color: rgb(var(--ctp-subtext0)) !important;
+.anp-custom-checkboxes [data-task=S] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task=S] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=S][type=checkbox]:checked {
+  --checkbox-color: transparent;
+  --checkbox-color-hover: transparent;
+  border-width: 0;
 }
 .anp-custom-checkboxes [data-task="/"] > input[type=checkbox]:checked:after,
 .anp-custom-checkboxes [data-task="/"] > p > input[type=checkbox]:checked:after, .anp-custom-checkboxes [data-task="/"][type=checkbox]:checked:after {
@@ -6912,11 +6940,11 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task="<"] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task="<"] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task="<"][type=checkbox]:checked {
-  --checkbox-color: transparent;
-  --checkbox-color-hover: transparent;
-  border-width: 0;
+.anp-custom-checkboxes [data-task="/"] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task="/"] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task="/"][type=checkbox]:checked {
+  --checkbox-color: rgba(var(--ctp-subtext0), 0.3);
+  --checkbox-color-hover: rgba(var(--ctp-subtext0), 0.3);
+  border-color: rgb(var(--ctp-subtext0)) !important;
 }
 .anp-custom-checkboxes [data-task="<"] > input[type=checkbox]:checked:after,
 .anp-custom-checkboxes [data-task="<"] > p > input[type=checkbox]:checked:after, .anp-custom-checkboxes [data-task="<"][type=checkbox]:checked:after {
@@ -6933,8 +6961,8 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task=">"] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task=">"] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=">"][type=checkbox]:checked {
+.anp-custom-checkboxes [data-task="<"] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task="<"] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task="<"][type=checkbox]:checked {
   --checkbox-color: transparent;
   --checkbox-color-hover: transparent;
   border-width: 0;
@@ -6954,8 +6982,8 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task='"'] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task='"'] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task='"'][type=checkbox]:checked {
+.anp-custom-checkboxes [data-task=">"] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task=">"] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=">"][type=checkbox]:checked {
   --checkbox-color: transparent;
   --checkbox-color-hover: transparent;
   border-width: 0;
@@ -6975,8 +7003,8 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task=u] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task=u] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=u][type=checkbox]:checked {
+.anp-custom-checkboxes [data-task='"'] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task='"'] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task='"'][type=checkbox]:checked {
   --checkbox-color: transparent;
   --checkbox-color-hover: transparent;
   border-width: 0;
@@ -6996,8 +7024,8 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task=d] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task=d] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=d][type=checkbox]:checked {
+.anp-custom-checkboxes [data-task=u] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task=u] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=u][type=checkbox]:checked {
   --checkbox-color: transparent;
   --checkbox-color-hover: transparent;
   border-width: 0;
@@ -7017,8 +7045,8 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task=f] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task=f] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=f][type=checkbox]:checked {
+.anp-custom-checkboxes [data-task=d] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task=d] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=d][type=checkbox]:checked {
   --checkbox-color: transparent;
   --checkbox-color-hover: transparent;
   border-width: 0;
@@ -7038,8 +7066,8 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task=k] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task=k] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=k][type=checkbox]:checked {
+.anp-custom-checkboxes [data-task=f] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task=f] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=f][type=checkbox]:checked {
   --checkbox-color: transparent;
   --checkbox-color-hover: transparent;
   border-width: 0;
@@ -7059,8 +7087,8 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
 }
-.anp-custom-checkboxes [data-task=w] > input[type=checkbox]:checked,
-.anp-custom-checkboxes [data-task=w] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=w][type=checkbox]:checked {
+.anp-custom-checkboxes [data-task=k] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task=k] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=k][type=checkbox]:checked {
   --checkbox-color: transparent;
   --checkbox-color-hover: transparent;
   border-width: 0;
@@ -7079,6 +7107,12 @@ Icons were taken from Font Awesome: https://fontawesome.com/
   position: absolute;
   left: calc(var(--checkbox-size) * 1);
   font-weight: bold;
+}
+.anp-custom-checkboxes [data-task=w] > input[type=checkbox]:checked,
+.anp-custom-checkboxes [data-task=w] > p > input[type=checkbox]:checked, .anp-custom-checkboxes [data-task=w][type=checkbox]:checked {
+  --checkbox-color: transparent;
+  --checkbox-color-hover: transparent;
+  border-width: 0;
 }
 
 .anp-custom-checkboxes-labels [data-task="!"] input[type=checkbox]:checked:before, .anp-custom-checkboxes-labels [data-task="!"][type=checkbox]:checked:before {
@@ -7215,7 +7249,6 @@ Icons were taken from Font Awesome: https://fontawesome.com/
 .theme-dark.anp-speech-bubble [data-task="8"],
 .theme-dark.anp-speech-bubble [data-task="9"] {
   --text-normal: var(--background-primary);
-  transition: background-color 0.2s, background 0.2s, border-radius 0.2s;
 }
 .theme-dark.anp-speech-bubble [data-task="0"]::selection,
 .theme-dark.anp-speech-bubble [data-task="1"]::selection,
@@ -7229,6 +7262,18 @@ Icons were taken from Font Awesome: https://fontawesome.com/
 .theme-dark.anp-speech-bubble [data-task="9"]::selection {
   background-color: rgba(var(--ctp-crust), 0.2);
   background: rgba(var(--ctp-crust), 0.2);
+}
+.theme-dark.anp-speech-bubble [data-task="0"],
+.theme-dark.anp-speech-bubble [data-task="1"],
+.theme-dark.anp-speech-bubble [data-task="2"],
+.theme-dark.anp-speech-bubble [data-task="3"],
+.theme-dark.anp-speech-bubble [data-task="4"],
+.theme-dark.anp-speech-bubble [data-task="5"],
+.theme-dark.anp-speech-bubble [data-task="6"],
+.theme-dark.anp-speech-bubble [data-task="7"],
+.theme-dark.anp-speech-bubble [data-task="8"],
+.theme-dark.anp-speech-bubble [data-task="9"] {
+  transition: background-color 0.2s, background 0.2s, border-radius 0.2s;
 }
 
 .anp-speech-bubble .is-live-preview [data-task="0"].cm-active,
@@ -7574,7 +7619,7 @@ None of the original code was used and the feature was implemented from scratch.
 }
 .anp-full-rainbow-color-toggle .nav-file-title-content.is-being-renamed::selection,
 .anp-full-rainbow-color-toggle .nav-folder-title-content.is-being-renamed::selection {
-  background-color: hsla(var(--color-accent-hsl), 0.2);
+  background-color: color-mix(in oklch, var(--color-accent) 20%, transparent);
 }
 .anp-full-rainbow-color-toggle .nav-file-title-content.is-being-renamed::selection {
   background-color: rgba(var(--ctp-accent), 0.2);
@@ -7705,11 +7750,11 @@ None of the original code was used and the feature was implemented from scratch.
 
 .style-settings-heading:is([data-id=anuppuccin-theme-settings],
 [data-id=anuppuccin-theme-settings-extended]) {
-  border-color: hsla(var(--color-accent-hsl), 0.2);
+  border-color: color-mix(in oklch, var(--color-accent) 20%, transparent);
 }
 .style-settings-heading:is([data-id=anuppuccin-theme-settings],
 [data-id=anuppuccin-theme-settings-extended]):not(.is-collapsed) + .style-settings-container {
-  border-color: hsla(var(--color-accent-hsl), 0.2);
+  border-color: color-mix(in oklch, var(--color-accent) 20%, transparent);
 }
 .style-settings-heading:is([data-id=anuppuccin-theme-settings],
 [data-id=anuppuccin-theme-settings-extended]) .setting-item-name {
@@ -7854,9 +7899,6 @@ None of the original code was used and the feature was implemented from scratch.
 .setting-item:is([data-id*=anuppuccin-theme-settings]) > .setting-item-info > .setting-item-name {
   margin-left: -3px;
 }
-.setting-item:is([data-id*=anuppuccin-theme-settings]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
-  margin-right: 4px;
-}
 .setting-item:is([data-id*=anuppuccin-theme-settings]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator::after {
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-size: contain;
@@ -7872,15 +7914,15 @@ None of the original code was used and the feature was implemented from scratch.
   vertical-align: text-top;
   margin-right: 0;
 }
+.setting-item:is([data-id*=anuppuccin-theme-settings]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
+  margin-right: 4px;
+}
 .setting-item:is([data-id*=anuppuccin-theme-settings]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator > svg {
   display: none;
 }
 
 .setting-item:is([data-id*=anuppuccin-theme-settings-extended]) > .setting-item-info > .setting-item-name {
   margin-left: -3px;
-}
-.setting-item:is([data-id*=anuppuccin-theme-settings-extended]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
-  margin-right: 4px;
 }
 .setting-item:is([data-id*=anuppuccin-theme-settings-extended]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator::after {
   -webkit-mask-repeat: no-repeat;
@@ -7897,15 +7939,15 @@ None of the original code was used and the feature was implemented from scratch.
   vertical-align: text-top;
   margin-right: 0;
 }
+.setting-item:is([data-id*=anuppuccin-theme-settings-extended]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
+  margin-right: 4px;
+}
 .setting-item:is([data-id*=anuppuccin-theme-settings-extended]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator > svg {
   display: none;
 }
 
 .setting-item:is([data-id*=anp-colors-section-header]) > .setting-item-info > .setting-item-name {
   margin-left: -3px;
-}
-.setting-item:is([data-id*=anp-colors-section-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
-  margin-right: 4px;
 }
 .setting-item:is([data-id*=anp-colors-section-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator::after {
   -webkit-mask-repeat: no-repeat;
@@ -7922,15 +7964,15 @@ None of the original code was used and the feature was implemented from scratch.
   vertical-align: text-top;
   margin-right: 0;
 }
+.setting-item:is([data-id*=anp-colors-section-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
+  margin-right: 4px;
+}
 .setting-item:is([data-id*=anp-colors-section-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator > svg {
   display: none;
 }
 
 .setting-item:is([data-id*=anp-editor-header]) > .setting-item-info > .setting-item-name {
   margin-left: -3px;
-}
-.setting-item:is([data-id*=anp-editor-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
-  margin-right: 4px;
 }
 .setting-item:is([data-id*=anp-editor-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator::after {
   -webkit-mask-repeat: no-repeat;
@@ -7947,15 +7989,15 @@ None of the original code was used and the feature was implemented from scratch.
   vertical-align: text-top;
   margin-right: 0;
 }
+.setting-item:is([data-id*=anp-editor-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
+  margin-right: 4px;
+}
 .setting-item:is([data-id*=anp-editor-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator > svg {
   display: none;
 }
 
 .setting-item:is([data-id*=anp-preview-header]) > .setting-item-info > .setting-item-name {
   margin-left: -3px;
-}
-.setting-item:is([data-id*=anp-preview-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
-  margin-right: 4px;
 }
 .setting-item:is([data-id*=anp-preview-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator::after {
   -webkit-mask-repeat: no-repeat;
@@ -7972,15 +8014,15 @@ None of the original code was used and the feature was implemented from scratch.
   vertical-align: text-top;
   margin-right: 0;
 }
+.setting-item:is([data-id*=anp-preview-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
+  margin-right: 4px;
+}
 .setting-item:is([data-id*=anp-preview-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator > svg {
   display: none;
 }
 
 .setting-item:is([data-id*=anp-plugin-header]) > .setting-item-info > .setting-item-name {
   margin-left: -3px;
-}
-.setting-item:is([data-id*=anp-plugin-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
-  margin-right: 4px;
 }
 .setting-item:is([data-id*=anp-plugin-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator::after {
   -webkit-mask-repeat: no-repeat;
@@ -7997,15 +8039,15 @@ None of the original code was used and the feature was implemented from scratch.
   vertical-align: text-top;
   margin-right: 0;
 }
+.setting-item:is([data-id*=anp-plugin-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
+  margin-right: 4px;
+}
 .setting-item:is([data-id*=anp-plugin-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator > svg {
   display: none;
 }
 
 .setting-item:is([data-id*=anp-misc-element-header]) > .setting-item-info > .setting-item-name {
   margin-left: -3px;
-}
-.setting-item:is([data-id*=anp-misc-element-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
-  margin-right: 4px;
 }
 .setting-item:is([data-id*=anp-misc-element-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator::after {
   -webkit-mask-repeat: no-repeat;
@@ -8022,15 +8064,15 @@ None of the original code was used and the feature was implemented from scratch.
   vertical-align: text-top;
   margin-right: 0;
 }
+.setting-item:is([data-id*=anp-misc-element-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
+  margin-right: 4px;
+}
 .setting-item:is([data-id*=anp-misc-element-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator > svg {
   display: none;
 }
 
 .setting-item:is([data-id*=anp-show-hide-elements-header]) > .setting-item-info > .setting-item-name {
   margin-left: -3px;
-}
-.setting-item:is([data-id*=anp-show-hide-elements-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
-  margin-right: 4px;
 }
 .setting-item:is([data-id*=anp-show-hide-elements-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator::after {
   -webkit-mask-repeat: no-repeat;
@@ -8047,15 +8089,15 @@ None of the original code was used and the feature was implemented from scratch.
   vertical-align: text-top;
   margin-right: 0;
 }
+.setting-item:is([data-id*=anp-show-hide-elements-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
+  margin-right: 4px;
+}
 .setting-item:is([data-id*=anp-show-hide-elements-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator > svg {
   display: none;
 }
 
 .setting-item:is([data-id*=anp-typography-header]) > .setting-item-info > .setting-item-name {
   margin-left: -3px;
-}
-.setting-item:is([data-id*=anp-typography-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
-  margin-right: 4px;
 }
 .setting-item:is([data-id*=anp-typography-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator::after {
   -webkit-mask-repeat: no-repeat;
@@ -8072,15 +8114,15 @@ None of the original code was used and the feature was implemented from scratch.
   vertical-align: text-top;
   margin-right: 0;
 }
+.setting-item:is([data-id*=anp-typography-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
+  margin-right: 4px;
+}
 .setting-item:is([data-id*=anp-typography-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator > svg {
   display: none;
 }
 
 .setting-item:is([data-id*=anp-workspace-header]) > .setting-item-info > .setting-item-name {
   margin-left: -3px;
-}
-.setting-item:is([data-id*=anp-workspace-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
-  margin-right: 4px;
 }
 .setting-item:is([data-id*=anp-workspace-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator::after {
   -webkit-mask-repeat: no-repeat;
@@ -8097,15 +8139,15 @@ None of the original code was used and the feature was implemented from scratch.
   vertical-align: text-top;
   margin-right: 0;
 }
+.setting-item:is([data-id*=anp-workspace-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
+  margin-right: 4px;
+}
 .setting-item:is([data-id*=anp-workspace-header]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator > svg {
   display: none;
 }
 
 .setting-item:is([data-id*=anuppuccin-support]) > .setting-item-info > .setting-item-name {
   margin-left: -3px;
-}
-.setting-item:is([data-id*=anuppuccin-support]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
-  margin-right: 4px;
 }
 .setting-item:is([data-id*=anuppuccin-support]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator::after {
   -webkit-mask-repeat: no-repeat;
@@ -8122,15 +8164,15 @@ None of the original code was used and the feature was implemented from scratch.
   vertical-align: text-top;
   margin-right: 0;
 }
+.setting-item:is([data-id*=anuppuccin-support]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
+  margin-right: 4px;
+}
 .setting-item:is([data-id*=anuppuccin-support]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator > svg {
   display: none;
 }
 
 .setting-item:is([data-id*=anp-custom-rainbow-colors]) > .setting-item-info > .setting-item-name {
   margin-left: -3px;
-}
-.setting-item:is([data-id*=anp-custom-rainbow-colors]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
-  margin-right: 4px;
 }
 .setting-item:is([data-id*=anp-custom-rainbow-colors]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator::after {
   -webkit-mask-repeat: no-repeat;
@@ -8146,6 +8188,9 @@ None of the original code was used and the feature was implemented from scratch.
   transition: transform 0.1s;
   vertical-align: text-top;
   margin-right: 0;
+}
+.setting-item:is([data-id*=anp-custom-rainbow-colors]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator {
+  margin-right: 4px;
 }
 .setting-item:is([data-id*=anp-custom-rainbow-colors]) > .setting-item-info > .setting-item-name > .style-settings-collapse-indicator > svg {
   display: none;
@@ -8368,14 +8413,14 @@ None of the original code was used and the feature was implemented from scratch.
   gap: 10px;
 }
 
-#cMenuModalBar {
-  border: 2px solid rgba(var(--ctp-crust), 0.2);
-}
 #cMenuModalBar .cMenuCommandItem {
   background-color: rgba(var(--ctp-mantle), 0.4);
 }
 #cMenuModalBar .cMenuCommandItem:hover {
   background-color: rgba(var(--ctp-mantle), 0.6);
+}
+#cMenuModalBar {
+  border: 2px solid rgba(var(--ctp-crust), 0.2);
 }
 
 #cMenuModalBar button.cMenuCommandItem:hover {
@@ -8416,11 +8461,11 @@ None of the original code was used and the feature was implemented from scratch.
   margin: auto;
 }
 
-.calendar .day.svelte-q3wqg9 {
-  transition: background-color 0.1s;
-}
 .calendar .day.svelte-q3wqg9:hover {
   background-color: rgb(var(--ctp-crust));
+}
+.calendar .day.svelte-q3wqg9 {
+  transition: background-color 0.1s;
 }
 
 .cMenuToolbarDefaultAesthetic {

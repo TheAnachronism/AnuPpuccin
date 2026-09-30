@@ -7,8 +7,21 @@
 <h3 align="center">Voted <b>Best Theme</b> in <a href="https://forum.obsidian.md/t/gems-of-the-year-2022-winners/54903">Gems of the Year 2022</a> awards 🎉
 </h3>
 
-<h2 align="center">Notice</h2>
-<p align="center">AnuPpuccin is currently on hiatus!<br>I have been busy with endsems and projects, thus I haven't been able to dedicate time to fix bugs and issues and I'm really sorry for that 😅. Thank you for your understanding!</p>
+## Compatibility maintenance
+
+This fork maintains compatibility with current stable Obsidian while preserving Anubis's original theme and Catppuccin palettes. Version **1.6.0 requires Obsidian 1.13.0 or newer**; the compatibility baseline is desktop **1.13.7**. Unrelated upstream bugs and plugin-specific redesigns are outside this update.
+
+Dark **Macchiato** remains available through Style Settings → AnuPpuccin → dark color scheme. The default dark palette remains Mocha; existing palette selections are unchanged.
+
+See [the compatibility audit](docs/obsidian-compatibility.md) for official sources, confirmed changes, and deferred checks.
+
+### 1.6.0 changes
+
+- Adopt Obsidian 1.13's complete-color callout contract, including custom colors and configurable opacity.
+- Migrate metadata hiding and compact metadata buttons to the current Properties UI.
+- Replace deprecated core HSL accent helpers with complete-color mixes.
+- Pin the Sass compiler, build every bundled snippet, and add build CI.
+- Remove the obsolete `obsidian.css` output; install `theme.css`.
 
 ## Preface
 
@@ -26,17 +39,33 @@ I've made this theme primarily for my own purposes and it's completely free, but
 
 AnuPpuccin is licensed under the GPL-3.0 license which allows you to modify the code freely, however the Copyright and license notices must be preserved in your CSS. If you redistribute a part of my code, please credit my theme in your CSS file, and specify which code you are using. **Please keep my <a href="https://www.buymeacoffee.com/anubisnekhet">Buy Me a Coffee link</a> in your README if you do so.**
 
-<details>
-<summary><h2>Installation</h2></summary>
-<h3>Normal Installation</h3>
-Go to your theme folder (<code>.obsidian/themes</code>) and run:<br><br>
-<pre><code>git clone https://github.com/AnubisNekhet/AnuPpuccin.git</code></pre>
-<h3>Updating</h3>
-Go to your AnuPuccin folder (<code>.obsidian/themes/Anuppuccin</code>) and run:<br><br>
-<pre><code>git pull</code></pre>
-<h3>Building</h3>
-Clone the github repo and run <code>sass src/base.scss theme.css</code> in the root folder.
-</details>
+## Installation and development
+
+### Install this fork
+
+Copy `manifest.json` and `theme.css` into `<vault>/.obsidian/themes/AnuPpuccin/`, then select **AnuPpuccin** in Settings → Appearance. Back up any local theme modifications before replacing them.
+
+Alternatively, clone this fork directly into that directory:
+
+```sh
+git clone https://github.com/TheAnachronism/AnuPpuccin.git "<vault>/.obsidian/themes/AnuPpuccin"
+```
+
+To update a cloned installation, run `git pull` from its `AnuPpuccin` directory. The community theme entry still points to the original upstream repository; downloading it there does not install this fork.
+
+### Build from source
+
+Install [Bun](https://bun.sh), then run from the repository root:
+
+```sh
+bun install --frozen-lockfile
+bun run build
+bun run build:snippets
+```
+
+The lockfile pins Dart Sass **1.105.1**. Edit SCSS under `src/` or `snippets/src/`, not generated CSS. `make build` and `make snippets` provide the same build targets. Sass's existing `@import` deprecation warnings remain visible; migrating the source module system is separate from Obsidian compatibility.
+
+For a release, use an unprefixed tag matching `manifest.json`'s version and attach `manifest.json` and `theme.css`. No community listing transfer or release publication is performed by the build workflow.
 
 ## Community Contributions
 

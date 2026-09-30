@@ -105,9 +105,9 @@ body.anp-colorful-frame-icon-toggle-dark.theme-dark {
     &.anp-colorful-frame.anp-card-layout .sidebar-toggle-button,
     &.anp-colorful-frame.anp-card-layout .workspace-ribbon.mod-left:before,
     &:not(.anp-card-layout, .anp-border-layout) .workspace-ribbon.mod-left:before {
-        --tab-container-background: hsla(var(--anp-colorful-frame-color-hsl, var(--color-accent-hsl)), var(--anp-colorful-frame-opacity, 1));
-        --titlebar-background: hsla(var(--anp-colorful-frame-color-hsl, var(--color-accent-hsl)), var(--anp-colorful-frame-opacity, 1));
-        ;
+        --anp-colorful-frame-resolved-color: hsl(var(--anp-colorful-frame-color-hsl));
+        --tab-container-background: color-mix(in oklch, var(--anp-colorful-frame-resolved-color, var(--color-accent)) calc(100% * var(--anp-colorful-frame-opacity, 1)), transparent);
+        --titlebar-background: color-mix(in oklch, var(--anp-colorful-frame-resolved-color, var(--color-accent)) calc(100% * var(--anp-colorful-frame-opacity, 1)), transparent);
     }
 
     &.anp-card-layout {
